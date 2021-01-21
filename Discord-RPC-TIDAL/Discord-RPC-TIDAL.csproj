@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>discord_rpc_tidal</RootNamespace>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+    <Authors>Jonas Kaufmann</Authors>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL</PackageProjectUrl>
+    <Description>Display your currently playing song in TIDAL to other Discord users</Description>
+    <AssemblyName>Discord RPC TIDAL</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AppIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DiscordRichPresence" Version="1.0.169" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\AppIcon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
