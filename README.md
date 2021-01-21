@@ -2,6 +2,8 @@
 
 Lightweight app to display your currently playing song on TIDAL to other Discord users through Rich Presence. The indication will vanish shortly after you pause the playback.
 
+This project is neither created nor supported by Discord or TIDAL.
+
 Feel free to make suggestions or report bugs.
 
 
