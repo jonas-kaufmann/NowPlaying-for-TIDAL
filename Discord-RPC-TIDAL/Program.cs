@@ -1,5 +1,8 @@
+using discord_rpc_tidal.Logging;
 using discord_rpc_tidal.UI;
+using Squalr.Engine.Logging;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace discord_rpc_tidal
@@ -7,37 +10,36 @@ namespace discord_rpc_tidal
     static class Program
     {
         private static MyNotifyIcon MyNotifyIcon;
-        private static MyListener MyListener;
 
         static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException; // Receive unhandled exceptions
+            Logger.Subscribe(new SqualrLogger()); // Receive logs from the Squalr
 
             using (MyNotifyIcon = new MyNotifyIcon())
-            using (MyListener = new MyListener())
+            using (var tidalListener = new TidalListener())
+            using (var discordRPC = new DiscordRPC(tidalListener))
             {
-                MyNotifyIcon.PropertyChanged += MyNotifyIcon_PropertyChanged;
-                MyNotifyIcon_PropertyChanged(null, new System.ComponentModel.PropertyChangedEventArgs(nameof(MyNotifyIcon.Active))); // start Listener if in status 'active'
+                MyNotifyIcon.PropertyChanged += (sender, e) =>
+                {
+                    if (e.PropertyName == nameof(MyNotifyIcon.Active))
+                    {
+                        if (MyNotifyIcon.Active)
+                            tidalListener.Start();
+                        else
+                            tidalListener.Stop();
+                    }
+                };
 
+                tidalListener.Start();
                 Application.Run();
             }
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            Trace.TraceError(e.ExceptionObject.ToString());
             MessageBox.Show(e.ExceptionObject.ToString(), AppDomain.CurrentDomain.FriendlyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private static void MyNotifyIcon_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MyNotifyIcon.Active))
-            {
-                MyListener.Start();
-                if (MyNotifyIcon.Active)
-                    MyListener.Start();
-                else
-                    MyListener.Stop();
-            }
         }
     }
 }

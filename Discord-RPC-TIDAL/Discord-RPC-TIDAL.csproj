@@ -12,10 +12,12 @@
     <PackageProjectUrl>https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL</PackageProjectUrl>
     <Description>Display your currently playing song in TIDAL to other Discord users</Description>
     <AssemblyName>Discord RPC TIDAL</AssemblyName>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
+    <PackageReference Include="Squalr.Engine.Scanning" Version="2.3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
