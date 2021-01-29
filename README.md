@@ -8,11 +8,9 @@ Feel free to make suggestions or report bugs.
 
 
 ## Screenshots
-![status extended](https://user-images.githubusercontent.com/14842772/106336759-e2368000-628f-11eb-9c22-46472bb85e63.png)
+![status extended](https://user-images.githubusercontent.com/14842772/106338157-63dbdd00-6293-11eb-8f1e-f72057a8c4e0.png)
 
-![status server member list](https://user-images.githubusercontent.com/14842772/106336758-e19de980-628f-11eb-82c1-b29274d18d8e.png)
-
-![status friends page](https://user-images.githubusercontent.com/14842772/106336757-e1055300-628f-11eb-8f2a-2a08577b9385.png)
+![status server member list](https://user-images.githubusercontent.com/14842772/106338156-63dbdd00-6293-11eb-9ac8-0be93a3cfcc1.png)
 
 
 ## Instructions
