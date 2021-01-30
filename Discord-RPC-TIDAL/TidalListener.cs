@@ -21,7 +21,7 @@ namespace discord_rpc_tidal
         private const int REFRESHINTERVAL = 1000;
         private const int REFRESHINTERVALADDRESS = 4000;
         private const int TIMECODEUPPERDEVIATION = REFRESHINTERVAL;
-        private const int TIMECODELOWERDEVIATION = 2 * REFRESHINTERVAL;
+        private const int TIMECODELOWERDEVIATION = REFRESHINTERVAL;
         #endregion
 
 
@@ -92,13 +92,17 @@ namespace discord_rpc_tidal
         {
             UpdateProcess();
 
+            // do nothing when the window title is empty
+            if (Process != null && string.IsNullOrEmpty(Process.MainWindowTitle))
+                return;
+
             Stopwatch songStartTime = new Stopwatch();
             songStartTime.Start();
 
             // update song
             var oldSong = CurrentSong;
             var oldMostRecentSong = MostRecentSong;
-            if (Process == null || Process.MainWindowTitle.Trim() == PROCESSNAME) // if no song is playing
+            if (Process == null || Process.MainWindowTitle.Trim().Contains(PROCESSNAME, StringComparison.CurrentCultureIgnoreCase)) // if no song is playing
             {
                 CurrentSong = null;
             }
@@ -121,7 +125,10 @@ namespace discord_rpc_tidal
 
             // notify subscribers
             if (oldSong != CurrentSong)
+            {
+                TokenSource?.Cancel(); // cancel running task to find timecode address
                 SongChanged?.Invoke(oldSong, CurrentSong);
+            }
             else if (oldTimecode != CurrentTimecode)
                 TimecodeChanged?.Invoke(oldTimecode, CurrentTimecode);
 
@@ -130,6 +137,8 @@ namespace discord_rpc_tidal
             {
                 UpdateTimecodeAddress(songStartTime);
             }
+            else
+                songStartTime.Stop();
         }
 
         private ulong? TimecodeAddress;
@@ -139,8 +148,6 @@ namespace discord_rpc_tidal
         private void UpdateTimecodeAddress(Stopwatch songStartTime)
         {
             TimecodeAddress = null;
-
-            TokenSource?.Cancel(); // cancel already running task
 
             TokenSource = new CancellationTokenSource();
             var task = Task.Run(() => FindAddress(songStartTime, TokenSource.Token), TokenSource.Token);
