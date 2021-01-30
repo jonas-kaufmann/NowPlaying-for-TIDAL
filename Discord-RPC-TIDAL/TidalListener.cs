@@ -19,7 +19,9 @@ namespace discord_rpc_tidal
         private const string PROCESSNAME = "TIDAL";
         private const string SPLITSTRING = "-";
         private const int REFRESHINTERVAL = 1000;
-        private const int REFRESHINTERVALADDRESS = 2000;
+        private const int REFRESHINTERVALADDRESS = 4000;
+        private const int TIMECODEUPPERDEVIATION = REFRESHINTERVAL;
+        private const int TIMECODELOWERDEVIATION = 2 * REFRESHINTERVAL;
         #endregion
 
 
@@ -64,23 +66,25 @@ namespace discord_rpc_tidal
 
         private void UpdateProcess()
         {
-            foreach (var process in Process.GetProcessesByName(PROCESSNAME))
+            Process?.Refresh();
+
+            if (Process == null || Process.HasExited)
             {
-                if (!string.IsNullOrWhiteSpace(process.MainWindowTitle))
+                // find process
+                foreach (var process in Process.GetProcessesByName(PROCESSNAME))
                 {
-                    if (Process == null || Process.Id != process.Id)
+                    if (!string.IsNullOrWhiteSpace(process.MainWindowTitle))
                     {
                         TimecodeAddress = null;
                         MostRecentSong = null;
+                        Process = process;
                     }
 
-                    Process = process;
+                    return;
                 }
 
-                return;
+                Process = null;
             }
-
-            Process = null;
         }
 
         private string MostRecentSong;
@@ -136,11 +140,7 @@ namespace discord_rpc_tidal
         {
             TimecodeAddress = null;
 
-            if (TokenSource != null)
-            {
-                TokenSource.Cancel();
-                Trace.TraceInformation("Aborted already running task for finding timecode address.");
-            }
+            TokenSource?.Cancel(); // cancel already running task
 
             TokenSource = new CancellationTokenSource();
             var task = Task.Run(() => FindAddress(songStartTime, TokenSource.Token), TokenSource.Token);
@@ -156,9 +156,7 @@ namespace discord_rpc_tidal
                 Processes.Default.OpenedProcess = Process;
 
             DataType dataType = DataType.Double;
-
-            // Collect values
-            Snapshot snapshot = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshotOrPrefilter);
+            var snapshot = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromSettings); // Use activeOrPrefilter here when new version of squalr is released
             snapshot.ElementDataType = dataType;
 
             var timer = new System.Timers.Timer(REFRESHINTERVALADDRESS)
@@ -174,8 +172,10 @@ namespace discord_rpc_tidal
                     cancellationToken.ThrowIfCancellationRequested();
 
                     ScanConstraintCollection scanConstraints = new ScanConstraintCollection();
-                    scanConstraints.AddConstraint(new ScanConstraint(ScanConstraint.ConstraintType.LessThanOrEqual, songStartTime.ElapsedMilliseconds / 1000d + 2 * REFRESHINTERVAL / 1000d));
-                    scanConstraints.AddConstraint(new ScanConstraint(ScanConstraint.ConstraintType.GreaterThanOrEqual, songStartTime.ElapsedMilliseconds / 1000d - 2 * REFRESHINTERVAL / 1000d));
+                    var upperBound = (songStartTime.ElapsedMilliseconds + TIMECODEUPPERDEVIATION) / 1000d;
+                    var lowerBound = (songStartTime.ElapsedMilliseconds - TIMECODELOWERDEVIATION) / 1000d;
+                    scanConstraints.AddConstraint(new ScanConstraint(ScanConstraint.ConstraintType.LessThanOrEqual, upperBound));
+                    scanConstraints.AddConstraint(new ScanConstraint(ScanConstraint.ConstraintType.GreaterThanOrEqual, lowerBound));
 
                     var scanTask = ManualScanner.Scan(snapshot, dataType, scanConstraints, null, out var scanCTS); // further filter snapshot (checks current values)
                     cancellationToken.Register(scanCTS.Cancel);
@@ -241,6 +241,7 @@ namespace discord_rpc_tidal
         {
             Stop();
             UpdateSongInfoTimer.Dispose();
+            Process?.Dispose();
         }
     }
 }
