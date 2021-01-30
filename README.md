@@ -1,6 +1,6 @@
 # Discord-Rich-Presence-for-TIDAL
 
-Lightweight app to display your currently playing song on TIDAL to other Discord users through Rich Presence. The indication will vanish shortly after you pause the playback.
+Lightweight app to display your currently playing song on TIDAL and its timecode to other Discord users through Rich Presence. The indication will vanish shortly after you pause the playback.
 
 This project is neither created nor supported by Discord or TIDAL.
 
@@ -8,9 +8,9 @@ Feel free to make suggestions or report bugs.
 
 
 ## Screenshots
-![Screenshot status extended](https://user-images.githubusercontent.com/14842772/105393019-28e70300-5c1c-11eb-9093-c866c29b3c5e.png)
+![status extended](https://user-images.githubusercontent.com/14842772/106338157-63dbdd00-6293-11eb-8f1e-f72057a8c4e0.png)
 
-![Screenshot status](https://user-images.githubusercontent.com/14842772/105393020-297f9980-5c1c-11eb-9130-efa9562e3c4b.png)
+![status server member list](https://user-images.githubusercontent.com/14842772/106338156-63dbdd00-6293-11eb-9ac8-0be93a3cfcc1.png)
 
 
 ## Instructions
@@ -28,3 +28,8 @@ My goal was to create a clean, lightweight and easily extendible app.
 
 Currently, the window title is used to retrieve the playing song's title and artist(s). Those information are then sent to Discord using [Lachee/discord-rpc-csharp](https://github.com/Lachee/discord-rpc-csharp). I took some inspiration from [KNIF/TIDAL-RPC](https://github.com/KNIF/TIDAL-RPC) and am using his Discord App Id. Due to the way Discord implemented RPC, I don't see any option to display the currently playing track's album cover.
 
+In order to retrieve the currently playing song's timecode, I am reading the variable in TIDAL's memory which stores this information. This ensures, that the timecode shown in Discord is always in sync.
+
+How do I get the address of this variable? I am using a similar process to what you would do in Cheat Engine: Do a first scan when the song starts and then rescan using an approximation of the real value (assumption: playback wasn't interrupted) until there is only one address left. To be able to do that programatically and in general read other processes' memory, I use [Squalr/Squalr.Engine.Scanning](https://github.com/Squalr/Squalr).
+
+Since the address has to be found first, there is a slight delay before the timecode is shown in Discord.
