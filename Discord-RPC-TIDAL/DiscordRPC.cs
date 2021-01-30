@@ -86,6 +86,12 @@ namespace discord_rpc_tidal
 
         public void Dispose()
         {
+            if (TidalListener != null)
+            {
+                TidalListener.SongChanged -= TidalListener_SongChanged;
+                TidalListener.TimecodeChanged -= TidalListener_TimecodeChanged;
+            }
+
             Discord.SetPresence(null);
             Discord.ClearPresence();
             Discord.Dispose();
