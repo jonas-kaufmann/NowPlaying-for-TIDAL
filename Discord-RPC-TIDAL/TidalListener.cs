@@ -21,7 +21,7 @@ namespace discord_rpc_tidal
         private const int REFRESHINTERVAL = 1000;
         private const int REFRESHINTERVALADDRESS = 4000;
         private const int TIMECODEUPPERDEVIATION = REFRESHINTERVAL;
-        private const int TIMECODELOWERDEVIATION = REFRESHINTERVAL;
+        private const int TIMECODELOWERDEVIATION = REFRESHINTERVALADDRESS; // compensate for the time it takes for TIDAL to buffer the song
         #endregion
 
 
@@ -42,6 +42,9 @@ namespace discord_rpc_tidal
 
         public delegate void TimecodeChangedEventHandler(double? oldTimecode, double? newTimeCode);
         public event TimecodeChangedEventHandler TimecodeChanged;
+
+        public delegate void ProcessChangedEventHandler(Process oldProcess, Process newProcess);
+        public event ProcessChangedEventHandler ProcessChanged;
         #endregion
 
 
@@ -70,20 +73,24 @@ namespace discord_rpc_tidal
 
             if (Process == null || Process.HasExited)
             {
-                // find process
+                TimecodeAddress = null;
+                MostRecentSong = null;
+
+                var oldProcess = Process;
+                Process = null;
+
+                // try to find new process
                 foreach (var process in Process.GetProcessesByName(PROCESSNAME))
                 {
-                    if (!string.IsNullOrWhiteSpace(process.MainWindowTitle))
+                    if (!string.IsNullOrWhiteSpace(process.MainWindowTitle)) // process found
                     {
-                        TimecodeAddress = null;
-                        MostRecentSong = null;
                         Process = process;
+                        break;
                     }
-
-                    return;
                 }
 
-                Process = null;
+                if (oldProcess != Process)
+                    ProcessChanged?.Invoke(oldProcess, Process);
             }
         }
 

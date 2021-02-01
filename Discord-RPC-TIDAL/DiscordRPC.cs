@@ -13,25 +13,24 @@ namespace discord_rpc_tidal
 
         private readonly TidalListener TidalListener;
 
-        private DiscordRpcClient Discord = new DiscordRpcClient(APPID, -1,new DiscordLogger())
-        {
-            SkipIdenticalPresence = true
-        };
+        private DiscordRpcClient Discord = new DiscordRpcClient(APPID, -1, new DiscordLogger());
 
         public DiscordRPC(TidalListener tidalListener)
         {
             TidalListener = tidalListener;
+            Discord.Initialize();
+
             TidalListener.SongChanged += TidalListener_SongChanged;
             TidalListener.TimecodeChanged += TidalListener_TimecodeChanged;
 
-            Discord.Initialize();
+            Discord.OnReady += Discord_OnReady;
         }
 
         private void TidalListener_SongChanged(string oldSong, string newSong)
         {
             if (newSong == null) // clear RPC if no song is playing
             {
-                Discord.SetPresence(null);
+                Discord.ClearPresence();
                 return;
             }
 
@@ -49,7 +48,7 @@ namespace discord_rpc_tidal
             };
 
             if (TidalListener.CurrentTimecode.HasValue)
-                presence.Timestamps =  new Timestamps(DateTime.UtcNow.AddSeconds(-TidalListener.CurrentTimecode.Value));
+                presence.Timestamps = new Timestamps(DateTime.UtcNow.AddSeconds(-TidalListener.CurrentTimecode.Value));
 
             Discord.SetPresence(presence);
         }
@@ -84,6 +83,15 @@ namespace discord_rpc_tidal
             }
         }
 
+        private void Discord_OnReady(object sender, global::DiscordRPC.Message.ReadyMessage args)
+        {
+            // assume that discord has disconnected, so update the rpc
+            if (TidalListener.CurrentSong != null)
+            {
+                TidalListener_SongChanged(null, TidalListener.CurrentSong);
+            }
+        }
+
         public void Dispose()
         {
             if (TidalListener != null)
@@ -92,7 +100,6 @@ namespace discord_rpc_tidal
                 TidalListener.TimecodeChanged -= TidalListener_TimecodeChanged;
             }
 
-            Discord.SetPresence(null);
             Discord.ClearPresence();
             Discord.Dispose();
         }

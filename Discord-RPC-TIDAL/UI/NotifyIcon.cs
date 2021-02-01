@@ -10,7 +10,7 @@ namespace discord_rpc_tidal.UI
     {
         #region observable properties
 
-        private bool active = true;
+        private bool active;
         public bool Active
         {
             get => active;

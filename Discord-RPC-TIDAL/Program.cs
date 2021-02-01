@@ -31,7 +31,7 @@ namespace discord_rpc_tidal
                     }
                 };
 
-                tidalListener.Start();
+                MyNotifyIcon.Active = true;
                 Application.Run();
             }
         }
