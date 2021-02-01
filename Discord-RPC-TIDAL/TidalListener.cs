@@ -22,6 +22,7 @@ namespace discord_rpc_tidal
         private const int REFRESHINTERVALADDRESS = 4000;
         private const int TIMECODEUPPERDEVIATION = REFRESHINTERVAL;
         private const int TIMECODELOWERDEVIATION = REFRESHINTERVALADDRESS; // compensate for the time it takes for TIDAL to buffer the song
+        private const int MAXTIMECODEFAILS = 8;
         #endregion
 
 
@@ -95,6 +96,8 @@ namespace discord_rpc_tidal
         }
 
         private string MostRecentSong;
+        private ulong? TimecodeAddress;
+        private int TimecodeFailCount;
         private void UpdateSongInfo()
         {
             UpdateProcess();
@@ -128,6 +131,19 @@ namespace discord_rpc_tidal
             {
                 var value = Reader.Default.Read<double>(TimecodeAddress.Value, out var success);
                 CurrentTimecode = success ? value : null;
+
+                // scrap timecode address if multiple read attempts fail
+                if (success)
+                    TimecodeFailCount = 0;
+                else
+                {
+                    TimecodeFailCount++;
+
+                    if (TimecodeFailCount >= MAXTIMECODEFAILS)
+                    {
+                        TimecodeAddress = null;
+                    }
+                }
             }
 
             // notify subscribers
@@ -147,8 +163,6 @@ namespace discord_rpc_tidal
             else
                 songStartTime.Stop();
         }
-
-        private ulong? TimecodeAddress;
 
         private CancellationTokenSource TokenSource;
 
@@ -200,6 +214,7 @@ namespace discord_rpc_tidal
                     if (snapshot.ElementCount == 1 || snapshot.ElementCount == 2) // timecode has been found
                     {
                         TimecodeAddress = snapshot[0].BaseAddress;
+                        TimecodeFailCount = 0;
                         Trace.TraceInformation("Address of timecode has been found: " + string.Format("0x{0:X}", TimecodeAddress.Value));
                     }
                     else if (snapshot.ElementCount == 0)
