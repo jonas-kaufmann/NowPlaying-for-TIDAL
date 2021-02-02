@@ -20,8 +20,8 @@ namespace discord_rpc_tidal
         private const string SPLITSTRING = "-";
         private const int REFRESHINTERVAL = 1000;
         private const int REFRESHINTERVALADDRESS = 4000;
-        private const int TIMECODEUPPERDEVIATION = REFRESHINTERVAL;
-        private const int TIMECODELOWERDEVIATION = REFRESHINTERVALADDRESS; // compensate for the time it takes for TIDAL to buffer the song
+        private const int TIMECODEUPPERDEVIATION = 2 * REFRESHINTERVAL;
+        private const int TIMECODELOWERDEVIATION = 3000;
         private const int MAXTIMECODEFAILS = 8;
         #endregion
 
