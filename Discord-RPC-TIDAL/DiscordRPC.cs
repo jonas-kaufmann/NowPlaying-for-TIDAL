@@ -85,11 +85,8 @@ namespace discord_rpc_tidal
 
         private void Discord_OnReady(object sender, global::DiscordRPC.Message.ReadyMessage args)
         {
-            // assume that discord has disconnected, so update the rpc
-            if (TidalListener.CurrentSong != null)
-            {
-                TidalListener_SongChanged(null, TidalListener.CurrentSong);
-            }
+            // Discord has just been started, update the RPC
+            TidalListener_SongChanged(null, TidalListener.CurrentSong);
         }
 
         public void Dispose()
