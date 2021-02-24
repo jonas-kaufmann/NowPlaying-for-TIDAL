@@ -1,6 +1,5 @@
 # Discord-Rich-Presence-for-TIDAL
-
-Lightweight app that aims to reproduce Spotify's Now Playing feature in Discord using Game Activity. This project is neither created nor supported by Discord or TIDAL.
+Lightweight app that aims to imitate Spotify's Now Playing feature in Discord using Game Activity. This project is neither created nor supported by Discord or TIDAL.
 
 Feel free to make suggestions or report bugs.
 
