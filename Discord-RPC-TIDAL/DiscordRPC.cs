@@ -1,6 +1,9 @@
 ﻿using discord_rpc_tidal.Logging;
 using DiscordRPC;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using TidalLib;
 
 namespace discord_rpc_tidal
 {
@@ -13,7 +16,8 @@ namespace discord_rpc_tidal
 
         private readonly TidalListener TidalListener;
 
-        private DiscordRpcClient Discord = new DiscordRpcClient(APPID, -1, new DiscordLogger());
+        private DiscordRpcClient Discord = new DiscordRpcClient(APPID, -1, new DiscordLogger()) { SkipIdenticalPresence = false };
+        private LoginKey LoginKey;
 
         public DiscordRPC(TidalListener tidalListener)
         {
@@ -26,7 +30,7 @@ namespace discord_rpc_tidal
             Discord.OnReady += Discord_OnReady;
         }
 
-        private void TidalListener_SongChanged(string oldSong, string newSong)
+        private async void TidalListener_SongChanged(string oldSong, string newSong)
         {
             if (newSong == null) // clear RPC if no song is playing
             {
@@ -51,6 +55,54 @@ namespace discord_rpc_tidal
                 presence.Timestamps = new Timestamps(DateTime.UtcNow.AddSeconds(-TidalListener.CurrentTimecode.Value));
 
             Discord.SetPresence(presence);
+
+            // query TIDAL API for the track's link
+            var url = await Task.Run(async () =>
+            {
+                if (LoginKey == null)
+                {
+                    var key = TidalClient.GetAccessTokenFromTidalDesktop();
+                    if (key.Item1 != null)
+                    {
+                        Trace.TraceInformation("Could not get the key from TIDAL for the following Reason: " + key.Item1);
+                        return null;
+                    }
+
+                    if (key.Item2 == null)
+                        return null;
+
+                    LoginKey = key.Item2;
+                }
+
+                var searchResult = await TidalClient.Search(LoginKey, newSong, 1, QueryFilter.TRACK);
+
+                if (searchResult.Item1 != null)
+                {
+                    Trace.TraceInformation("Search query for the track failed for the following reason: " + searchResult.Item1);
+                    return null;
+                }
+
+                if (searchResult.Item2 == null || searchResult.Item2.Tracks == null || searchResult.Item2.Tracks.Count == 0)
+                    return null;
+
+                return searchResult.Item2.Tracks[0].Url;
+            });
+
+            // add a button to open the song in RPC
+            if (url != null && Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute) && TidalListener.CurrentSong == newSong)
+            {
+                var modifiedPresence = Discord.CurrentPresence.Clone();
+                modifiedPresence.Buttons = new Button[]
+                {
+                    new Button
+                    {
+                        Label = "Play on TIDAL",
+                        Url = url
+                    }
+                };
+
+                Discord.SetPresence(modifiedPresence);
+            }
         }
 
         private void TidalListener_TimecodeChanged(double? oldTimecode, double? newTimeCode)
