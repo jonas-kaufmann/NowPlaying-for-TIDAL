@@ -3,6 +3,7 @@ using DiscordRPC;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Timers;
 using TidalLib;
 
 namespace discord_rpc_tidal
@@ -13,11 +14,13 @@ namespace discord_rpc_tidal
         private const string LARGEIMAGETEXT = "TIDAL";
         private const string APPID = "735159392554713099";
         private const int MAXTIMEDIFFERENCE = 1000;
+        private const int KEYREFRESHINTERVAL = 120 * 1000;
 
         private readonly TidalListener TidalListener;
 
         private DiscordRpcClient Discord = new DiscordRpcClient(APPID, -1, new DiscordLogger()) { SkipIdenticalPresence = false };
         private LoginKey LoginKey;
+        private Timer RefreshKeyTimer;
 
         public DiscordRPC(TidalListener tidalListener)
         {
@@ -28,6 +31,10 @@ namespace discord_rpc_tidal
             TidalListener.TimecodeChanged += TidalListener_TimecodeChanged;
 
             Discord.OnReady += Discord_OnReady;
+
+            RefreshKeyTimer = new Timer(KEYREFRESHINTERVAL) { AutoReset = true };
+            RefreshKeyTimer.Elapsed += (sender, args) => LoginKey = null;
+            RefreshKeyTimer.Start();
         }
 
         private async void TidalListener_SongChanged(string oldSong, string newSong)
@@ -151,6 +158,8 @@ namespace discord_rpc_tidal
 
             Discord.ClearPresence();
             Discord.Dispose();
+
+            RefreshKeyTimer.Dispose();
         }
     }
 }
