@@ -96,9 +96,10 @@ namespace discord_rpc_tidal
             });
 
             // add a button to open the song in RPC
-            if (url != null && Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute) && TidalListener.CurrentSong == newSong)
+            var currentPresence = Discord.CurrentPresence;
+            if (url != null && Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute) && TidalListener.CurrentSong == newSong && currentPresence != null)
             {
-                var modifiedPresence = Discord.CurrentPresence.Clone();
+                var modifiedPresence = currentPresence.Clone();
                 modifiedPresence.Buttons = new Button[]
                 {
                     new Button
