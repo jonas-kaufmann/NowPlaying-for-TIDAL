@@ -1,6 +1,6 @@
 # Discord-Rich-Presence-for-TIDAL
 
-Lightweight app to display your currently playing song on TIDAL and its timecode to other Discord users through Rich Presence. The indication will vanish shortly after you pause the playback.
+Lightweight app that tries to reproduce Spotify's Now Playing feature in Discord using Game Activity.
 
 This project is neither created nor supported by Discord or TIDAL.
 
@@ -8,7 +8,7 @@ Feel free to make suggestions or report bugs.
 
 
 ## Screenshots
-![status extended](https://user-images.githubusercontent.com/14842772/106338157-63dbdd00-6293-11eb-8f1e-f72057a8c4e0.png)
+![status extended](https://user-images.githubusercontent.com/14842772/109040807-9d570b00-76ce-11eb-9ee2-1f5711154dc2.png)
 
 ![status server member list](https://user-images.githubusercontent.com/14842772/106338156-63dbdd00-6293-11eb-9ac8-0be93a3cfcc1.png)
 
