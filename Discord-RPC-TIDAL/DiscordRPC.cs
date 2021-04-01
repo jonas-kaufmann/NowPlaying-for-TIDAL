@@ -4,7 +4,8 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
-using TidalLib;
+using SimpleTidalApi;
+using SimpleTidalApi.Model;
 
 namespace discord_rpc_tidal
 {
