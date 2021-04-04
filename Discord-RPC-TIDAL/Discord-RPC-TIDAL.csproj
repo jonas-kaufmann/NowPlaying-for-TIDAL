@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
     <RootNamespace>discord_rpc_tidal</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
@@ -26,14 +26,9 @@
 
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.0.1" />
     <PackageReference Include="SimpleTidalApi" Version="1.0.0" />
     <PackageReference Include="Squalr.Engine.Scanning" Version="2.3.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="TidalLib">
-      <HintPath>Resources\TidalLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
