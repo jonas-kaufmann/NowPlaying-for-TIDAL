@@ -1,0 +1,11 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.Discord-RPC-for-TIDAL.iml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Users\jonask\Dropbox\Programmieren\Discord-Rich-Presence-for-TIDAL\.idea\.idea.Discord-RPC-for-TIDAL\.idea/dataSources/
+/dataSources.local.xml

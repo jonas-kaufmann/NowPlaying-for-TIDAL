@@ -4,6 +4,8 @@ using Squalr.Engine.Logging;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using discord_rpc_tidal.Data;
+using discord_rpc_tidal.Discord;
 
 namespace discord_rpc_tidal
 {
@@ -13,12 +15,19 @@ namespace discord_rpc_tidal
 
         static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException; // Receive unhandled exceptions
+            AppDomain.CurrentDomain.UnhandledException +=
+                CurrentDomain_UnhandledException; // Receive unhandled exceptions
             Logger.Subscribe(new SqualrLogger()); // Receive logs from the Squalr
+            Trace.Listeners.Add(new ConsoleTraceListener());
+
+            AppConfig.Load();
+            AppConfig.Save();
+
+            AssetManager.Sync();
 
             using (MyNotifyIcon = new MyNotifyIcon())
             using (var tidalListener = new TidalListener())
-            using (var discordRPC = new DiscordRPC(tidalListener))
+            using (var discordRpc = new DiscordRPC(tidalListener))
             {
                 MyNotifyIcon.PropertyChanged += (sender, e) =>
                 {
@@ -39,7 +48,8 @@ namespace discord_rpc_tidal
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Trace.TraceError(e.ExceptionObject.ToString());
-            MessageBox.Show(e.ExceptionObject.ToString(), AppDomain.CurrentDomain.FriendlyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(e.ExceptionObject.ToString(), AppDomain.CurrentDomain.FriendlyName, MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
     }
 }

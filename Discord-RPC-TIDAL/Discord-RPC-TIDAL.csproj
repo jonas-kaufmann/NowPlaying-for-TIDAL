@@ -22,12 +22,14 @@
 
   <ItemGroup>
     <None Remove="AppIcon.ico" />
+    <None Update="Resources\TIDAL Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
-    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.0.1" />
-    <PackageReference Include="SimpleTidalApi" Version="1.0.0" />
+    <PackageReference Include="SimpleTidalApi" Version="1.0.1" />
     <PackageReference Include="Squalr.Engine.Scanning" Version="2.3.0.1" />
   </ItemGroup>
 
@@ -35,6 +37,10 @@
     <None Update="Resources\AppIcon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model" />
   </ItemGroup>
 
 </Project>

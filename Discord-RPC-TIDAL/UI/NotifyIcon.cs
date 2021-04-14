@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using discord_rpc_tidal.Data;
 
 namespace discord_rpc_tidal.UI
 {
@@ -30,6 +32,7 @@ namespace discord_rpc_tidal.UI
 
         private readonly NotifyIcon NotifyIcon = new NotifyIcon();
         private readonly ToolStripMenuItem ToggleActiveItem;
+        private readonly ToolStripItem ConfigItem;
         private readonly ToolStripItem ExitItem;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,25 +52,18 @@ namespace discord_rpc_tidal.UI
                 CheckOnClick = true,
                 Checked = Active
             };
-            ToggleActiveItem.CheckedChanged += ToggleActive_CheckedChanged;
+            ToggleActiveItem.CheckedChanged += (sender, args) => Active = ToggleActiveItem.Checked;
             cms.Items.Add(ToggleActiveItem);
 
+            ConfigItem = cms.Items.Add(ConfigText);
+            ConfigItem.Click += (sender, args) => Process.Start("explorer.exe", $"/select,\"{AppConfig.ConfigPath}\"");
+
             ExitItem = cms.Items.Add(ExitText);
-            ExitItem.Click += Exit_Click;
+            ExitItem.Click += (sender, args) => Application.Exit();
 
             NotifyIcon.ContextMenuStrip = cms;
 
             NotifyIcon.Visible = true;
-        }
-
-        private void ToggleActive_CheckedChanged(object sender, EventArgs e)
-        {
-            Active = ToggleActiveItem.Checked;
-        }
-
-        private void Exit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         public void Dispose()
@@ -78,6 +74,7 @@ namespace discord_rpc_tidal.UI
         #region string resources
 
         private const string StatusText = "Active";
+        private const string ConfigText = "Show Config";
         private const string ExitText = "Exit";
 
         #endregion
