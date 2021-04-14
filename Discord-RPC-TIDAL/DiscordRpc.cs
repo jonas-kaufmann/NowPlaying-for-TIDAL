@@ -6,12 +6,12 @@ using discord_rpc_tidal.Utils;
 
 namespace discord_rpc_tidal
 {
-    class DiscordRPC : IDisposable
+    class DiscordRpc : IDisposable
     {
         private readonly TidalListener TidalListener;
         private readonly DiscordRpcClient Discord = new(AppConfig.DiscordAppId);
 
-        public DiscordRPC(TidalListener tidalListener)
+        public DiscordRpc(TidalListener tidalListener)
         {
             TidalListener = tidalListener;
             Discord.Initialize();
@@ -54,20 +54,31 @@ namespace discord_rpc_tidal
             if (track == null)
                 return;
 
-            var currentPresence = Discord.CurrentPresence;
+            AssetManager.NotifyUsed(track.Album);
+            
+            // make sure track hasn't changed in the meantime
+            if (newSong != TidalListener.CurrentSong)
+                return;
 
             // add album cover if available
+            presence = new RichPresence()
+            {
+                Details = GeneralUtils.CutDownStringToByteSize(songinfo.Item1, 128),
+                State = GeneralUtils.CutDownStringToByteSize(songinfo.Item2, 128),
+                Assets = new Assets
+                {
+                    LargeImageKey = Constants.DiscordRpcDefaultLargeImageKey,
+                    LargeImageText = Constants.DiscordRpcDefaultLargeImageText
+                }
+            };
+            
             if (AssetManager.Available(track.Album))
-                currentPresence.Assets.LargeImageKey = track.Album.ID.ToString();
+                presence.Assets.LargeImageKey = track.Album.ID.ToString();
             else
                 _ = AssetManager.UploadIfNotExists(track.Album);
 
             // add a button to open the song in RPC
-            if (track.Url == null || !Uri.IsWellFormedUriString(track.Url, UriKind.RelativeOrAbsolute) ||
-                TidalListener.CurrentSong != newSong || currentPresence == null) return;
-
-            var modifiedPresence = currentPresence.Clone();
-            modifiedPresence.Buttons = new[]
+            presence.Buttons = new[]
             {
                 new Button
                 {
@@ -76,7 +87,7 @@ namespace discord_rpc_tidal
                 }
             };
 
-            Discord.SetPresence(modifiedPresence);
+            Discord.SetPresence(presence);
         }
 
         private void TidalListener_TimecodeChanged(double? oldTimecode, double? newTimeCode)

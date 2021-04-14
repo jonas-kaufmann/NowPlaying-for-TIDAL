@@ -12,33 +12,57 @@ namespace discord_rpc_tidal.Discord
     public static class AssetManager
     {
         private static readonly DiscordApi DiscordApi = new();
-        private static Dictionary<string, DiscordAsset> _assets = new();
 
         /// <returns>True if succesful or already exists</returns>
         public static async Task<bool> UploadIfNotExists(Album album)
         {
-            if (Exists(album))
-                return true;
-
             if (!AppConfig.UseAlbumArtwork)
                 return false;
 
+            if (Exists(album))
+                return true;
+
+
+            // make room for the new asset
+            IEnumerable<DiscordAsset> assetsToDelete = new List<DiscordAsset>(0);
+            lock (DiscordAssets.Assets)
+            {
+                var numberOfAssetsToDelete = DiscordAssets.Assets.Count - Constants.DiscordAssetsLimit + 1;
+                if (numberOfAssetsToDelete > 0)
+                    assetsToDelete = DiscordAssets.Assets.Values.OrderBy(a => a.LastUsed).Take(numberOfAssetsToDelete);
+            }
+
+            foreach (var asset in assetsToDelete)
+            {
+                if (!await DiscordApi.DeleteAsset(asset.Id))
+                    return false;
+
+                DiscordAssets.Assets.Remove(asset.Name);
+                DiscordAssets.Save();
+            }
+
+            
+            // upload asset
             var imageData = HttpUtils.ConvertImageToBase64(album.CoverMidUrl);
 
             if (imageData == null)
                 return false;
 
-            if (!await DiscordApi.UploadAsset(album.ID.ToString(), imageData))
+            var assetId = await DiscordApi.UploadAsset(album.ID.ToString(), imageData);
+            if (assetId == null)
                 return false;
 
-            lock (_assets)
+            lock (DiscordAssets.Assets)
             {
-                _assets.Add(album.ID.ToString(), new DiscordAsset
+                DiscordAssets.Assets.Add(album.ID.ToString(), new DiscordAsset
                 {
+                    Id = assetId,
                     Name = album.ID.ToString(),
                     Uploaded = DateTime.Now,
                     LastUsed = DateTime.Now
                 });
+                
+                DiscordAssets.Save();
 
                 return true;
             }
@@ -48,10 +72,10 @@ namespace discord_rpc_tidal.Discord
         {
             if (!AppConfig.UseAlbumArtwork)
                 return false;
-            
-            lock (_assets)
+
+            lock (DiscordAssets.Assets)
             {
-                return _assets.ContainsKey(album.ID.ToString());
+                return DiscordAssets.Assets.ContainsKey(album.ID.ToString());
             }
         }
 
@@ -64,11 +88,11 @@ namespace discord_rpc_tidal.Discord
         {
             if (!AppConfig.UseAlbumArtwork)
                 return false;
-            
-            lock (_assets)
+
+            lock (DiscordAssets.Assets)
             {
                 return Exists(album) &&
-                       DateTime.Now.Subtract(_assets[album.ID.ToString()].Uploaded) >=
+                       DateTime.Now.Subtract(DiscordAssets.Assets[album.ID.ToString()].Uploaded) >=
                        TimeSpan.FromMinutes(Constants.DiscordAssetsTimeUntilAvailability);
             }
         }
@@ -77,12 +101,13 @@ namespace discord_rpc_tidal.Discord
         {
             if (!AppConfig.UseAlbumArtwork)
                 return;
-            
-            lock (_assets)
+
+            lock (DiscordAssets.Assets)
             {
-                if (_assets.ContainsKey(album.ID.ToString()))
+                if (DiscordAssets.Assets.ContainsKey(album.ID.ToString()))
                 {
-                    _assets[album.ID.ToString()].LastUsed = DateTime.Now;
+                    DiscordAssets.Assets[album.ID.ToString()].LastUsed = DateTime.Now;
+                    DiscordAssets.Save();
                 }
             }
         }
@@ -91,39 +116,52 @@ namespace discord_rpc_tidal.Discord
         {
             if (!AppConfig.UseAlbumArtwork)
                 return;
-            
+
             var assetList = await DiscordApi.GetAssetList();
             if (assetList == null)
                 return;
 
             var newAssets = new Dictionary<string, DiscordAsset>();
 
-            lock (_assets)
+            lock (DiscordAssets.Assets)
             {
                 foreach (var asset in assetList)
                 {
-                    if (_assets.ContainsKey(asset.Name))
+                    // if asset already exists then delete this one
+                    if (newAssets.ContainsKey(asset.Name))
                     {
-                        newAssets.Add(asset.Name, _assets[asset.Name]);
+                        _ = DiscordApi.DeleteAsset(asset.Id);
+                        continue;
                     }
-                    else if (
-                        !Constants.DiscordWhitelistedAssets
-                            .Contains(asset
-                                .Name)) // if asset is unknown and not whitelisted, mark it to be deleted by setting LastUsed to DateTime.Min
+
+                    DiscordAsset assetToBeAdded;
+                    if (DiscordAssets.Assets.ContainsKey(asset.Name))
                     {
-                        newAssets.Add(asset.Name, new DiscordAsset
+                        assetToBeAdded = DiscordAssets.Assets[asset.Name];
+                    }
+                    // asset unknown
+                    else
+                    {
+                        assetToBeAdded = new DiscordAsset
                         {
+                            Id = asset.Id,
                             Name = asset.Name,
                             Uploaded = DateTime.MinValue,
                             LastUsed = DateTime.MinValue
-                        });
+                        };
+
+                        if (Constants.DiscordWhitelistedAssets.Contains(asset.Name))
+                            assetToBeAdded.LastUsed = DateTime.MaxValue;
                     }
+
+                    newAssets.Add(asset.Name, assetToBeAdded);
                 }
             }
-            
-            lock (_assets)
+
+            lock (DiscordAssets.Assets)
             {
-                _assets = newAssets;
+                DiscordAssets.Assets = newAssets;
+                DiscordAssets.Save();
             }
 
             // upload default asset

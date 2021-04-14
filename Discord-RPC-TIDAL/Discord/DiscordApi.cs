@@ -44,8 +44,8 @@ namespace discord_rpc_tidal.Discord
 
         /// <param name="name">Name under which the asset should appear</param>
         /// <param name="imageData">image data encoded in Base64</param>
-        /// <returns>True if succesful</returns>
-        public async Task<bool> UploadAsset(string name, string imageData)
+        /// <returns>Id of the uploaded asset if succesful</returns>
+        public async Task<string> UploadAsset(string name, string imageData)
         {
             string payload = JsonSerializer.Serialize(new
             {
@@ -60,16 +60,41 @@ namespace discord_rpc_tidal.Discord
                 $"https://discordapp.com/api/oauth2/applications/{AppConfig.DiscordAppId}/assets", content);
 
             var responseContent = await response.Content.ReadAsStringAsync();
+            DiscordAssetResponseEntry assetResponse = null;
+            try
+            {
+                assetResponse = JsonSerializer.Deserialize<DiscordAssetResponseEntry>(responseContent,
+                    new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
+            }
+            catch (JsonException)
+            {
+                
+            }
 
-            var wasSuccessful = responseContent.Contains(name);
-
-            if (wasSuccessful)
-                Trace.TraceInformation(
-                    $"DiscordAPI: Upload of asset {name} was successful");
-            else
+            // not succesful
+            if (assetResponse == null)
+            {
                 Trace.TraceError($"DiscordAPI: Upload of asset {name} failed\nreason: {responseContent}");
 
-            return wasSuccessful;
+                return null;
+            }
+            
+            Trace.TraceInformation($"DiscordAPI: Upload of asset {name} was successful");
+            return assetResponse.Id;
+        }
+
+        /// <returns>True if succesful</returns>
+        public async Task<bool> DeleteAsset(string assetId)
+        {
+            var response =
+                await HttpClient.DeleteAsync(
+                    $"https://discordapp.com/api/oauth2/applications/{AppConfig.DiscordAppId}/assets/{assetId}");
+
+            Trace.TraceInformation(response.IsSuccessStatusCode
+                ? $"DiscordAPI: Deletion of asset with id {assetId} was successful"
+                : $"DiscordAPI: Deletion of asset with id {assetId} failed");
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

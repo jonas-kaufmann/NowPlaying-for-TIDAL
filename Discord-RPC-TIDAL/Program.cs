@@ -23,11 +23,12 @@ namespace discord_rpc_tidal
             AppConfig.Load();
             AppConfig.Save();
 
+            DiscordAssets.Load();
             AssetManager.Sync();
 
             using (MyNotifyIcon = new MyNotifyIcon())
             using (var tidalListener = new TidalListener())
-            using (var discordRpc = new DiscordRPC(tidalListener))
+            using (var discordRpc = new DiscordRpc(tidalListener))
             {
                 MyNotifyIcon.PropertyChanged += (sender, e) =>
                 {
