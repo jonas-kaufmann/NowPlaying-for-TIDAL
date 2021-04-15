@@ -50,6 +50,9 @@ Since the address has to be found first, there is a slight delay before the time
 
 Using the earlier attained song's title and artist(s), we can now query TIDAL's API for information about the track. The authentication token needed to interact with TIDAL's API is read from the TIDAL desktop app's log files. However, this token can expire. If you experience that the `Play on TIDAL` button is no longer visible, simply restart the desktop app and the token will be renewed.
 
-We have now attained an URL pointing to the track and an URL pointing to its album artwork. We can use latter to upload the artwork as an asset to our Discord Application. If the space is full, we need to delete an asset first. This asset is chosen using the LRU strategy (Least Recently Used). However, for LRU to work, we need to track when an artwork has been used the last time. This information is stored in `DiscordAssets.json`.
+We have now attained an URL pointing to the track and an URL pointing to its album artwork. We can use latter to upload the artwork as an asset to our Discord Application. Due to caching, it takes roughly 10 mins before an uploaded asset is availabe.
+
+If the space is full, we need to delete an asset first. This asset is chosen using the LRU strategy (Least Recently Used). However, for LRU to work, we need to track when an artwork has been used the last time. This information is stored in `DiscordAssets.json`.
+
 
 Big Thanks to [maybeclean](https://github.com/maybeclean) for teaching me how to manage Discord Application Assets and providing a base implementation of the album artwok feature. Details can be found in [this issue](https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL/issues/2).
