@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using discord_rpc_tidal.Discord;
+using nowplaying_for_tidal.Discord;
 
-namespace discord_rpc_tidal.Data
+namespace nowplaying_for_tidal.Data
 {
     public static class DiscordAssets
     {

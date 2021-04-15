@@ -1,7 +1,7 @@
 ﻿using DiscordRPC.Logging;
 using System.Diagnostics;
 
-namespace discord_rpc_tidal.Logging
+namespace nowplaying_for_tidal.Logging
 {
     class DiscordLogger : ILogger
     {

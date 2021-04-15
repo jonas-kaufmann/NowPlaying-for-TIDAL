@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace discord_rpc_tidal
+namespace nowplaying_for_tidal
 {
     class TidalListener : IDisposable
     {

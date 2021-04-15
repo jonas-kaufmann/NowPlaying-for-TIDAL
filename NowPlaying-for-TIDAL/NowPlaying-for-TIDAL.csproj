@@ -2,17 +2,18 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
-    <RootNamespace>discord_rpc_tidal</RootNamespace>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>nowplaying_for_tidal</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
     <Authors>Jonas Kaufmann</Authors>
     <NeutralLanguage>en</NeutralLanguage>
-    <RepositoryUrl>https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Kaufi-Jonas/NowPlaying-for-TIDAL</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Kaufi-Jonas/NowPlaying-for-TIDAL</PackageProjectUrl>
     <Description>Display your currently playing song in TIDAL to other Discord users</Description>
-    <AssemblyName>Discord RPC TIDAL</AssemblyName>
     <Version>1.2</Version>
+    <IsPackable>false</IsPackable>
+    <PackageVersion>1.3</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discord-RPC-TIDAL", "Discord-RPC-TIDAL\Discord-RPC-TIDAL.csproj", "{88F0C439-589C-4648-9E37-CDA315EA4047}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NowPlaying-for-TIDAL", "NowPlaying-for-TIDAL\NowPlaying-for-TIDAL.csproj", "{88F0C439-589C-4648-9E37-CDA315EA4047}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

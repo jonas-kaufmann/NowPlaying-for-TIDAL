@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace discord_rpc_tidal.Utils
+namespace nowplaying_for_tidal.Utils
 {
     public class GeneralUtils
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace discord_rpc_tidal.Discord
+namespace nowplaying_for_tidal.Discord
 {
     public class DiscordAssetResponseEntry
     {

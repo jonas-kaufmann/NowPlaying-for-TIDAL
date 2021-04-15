@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using discord_rpc_tidal.Data;
-using discord_rpc_tidal.Utils;
+using nowplaying_for_tidal.Data;
+using nowplaying_for_tidal.Utils;
 using SimpleTidalApi.Model;
 
-namespace discord_rpc_tidal.Discord
+namespace nowplaying_for_tidal.Discord
 {
     public static class AssetManager
     {

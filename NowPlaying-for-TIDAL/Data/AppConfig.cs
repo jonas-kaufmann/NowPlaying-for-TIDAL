@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.Json;
 
-namespace discord_rpc_tidal.Data
+namespace nowplaying_for_tidal.Data
 {
     public static class AppConfig
     {

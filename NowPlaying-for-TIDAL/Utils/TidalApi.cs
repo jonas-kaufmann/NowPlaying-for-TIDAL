@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using SimpleTidalApi;
 using SimpleTidalApi.Model;
 
-namespace discord_rpc_tidal.Utils
+namespace nowplaying_for_tidal.Utils
 {
     public static class TidalApi
     {

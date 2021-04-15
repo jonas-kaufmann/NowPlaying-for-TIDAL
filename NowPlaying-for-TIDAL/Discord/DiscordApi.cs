@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
-using discord_rpc_tidal.Data;
+using nowplaying_for_tidal.Data;
 
-namespace discord_rpc_tidal.Discord
+namespace nowplaying_for_tidal.Discord
 {
     public class DiscordApi
     {

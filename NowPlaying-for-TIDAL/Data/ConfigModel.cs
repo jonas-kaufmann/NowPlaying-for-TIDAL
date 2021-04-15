@@ -1,4 +1,4 @@
-﻿namespace discord_rpc_tidal.Data
+﻿namespace nowplaying_for_tidal.Data
 {
     public class ConfigModel
     {

@@ -1,13 +1,13 @@
-using discord_rpc_tidal.Logging;
-using discord_rpc_tidal.UI;
 using Squalr.Engine.Logging;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using discord_rpc_tidal.Data;
-using discord_rpc_tidal.Discord;
+using nowplaying_for_tidal.Data;
+using nowplaying_for_tidal.Discord;
+using nowplaying_for_tidal.Logging;
+using nowplaying_for_tidal.UI;
 
-namespace discord_rpc_tidal
+namespace nowplaying_for_tidal
 {
     static class Program
     {

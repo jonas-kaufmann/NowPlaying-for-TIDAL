@@ -1,10 +1,10 @@
 using DiscordRPC;
 using System;
-using discord_rpc_tidal.Data;
-using discord_rpc_tidal.Discord;
-using discord_rpc_tidal.Utils;
+using nowplaying_for_tidal.Data;
+using nowplaying_for_tidal.Discord;
+using nowplaying_for_tidal.Utils;
 
-namespace discord_rpc_tidal
+namespace nowplaying_for_tidal
 {
     class DiscordRpc : IDisposable
     {

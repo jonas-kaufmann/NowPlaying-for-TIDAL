@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using discord_rpc_tidal.Data;
+using nowplaying_for_tidal.Data;
 
-namespace discord_rpc_tidal.UI
+namespace nowplaying_for_tidal.UI
 {
     public class MyNotifyIcon : IDisposable, INotifyPropertyChanged
     {
