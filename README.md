@@ -5,18 +5,18 @@ Feel free to make suggestions or report bugs.
 
 
 ## Screenshots
-![Discord Profile Small](https://user-images.githubusercontent.com/14842772/114887954-25bd7680-9e09-11eb-8fae-59b03c21d94f.png)
+![Discord Profile Small](https://user-images.githubusercontent.com/14842772/115017631-198ff280-9eb7-11eb-8be9-7906653fecc6.png)
 
 ![Discord Profile Full](https://user-images.githubusercontent.com/14842772/114887949-2524e000-9e09-11eb-8028-0cb69545815e.png)
 
 
-## Instructions
+## Installation Instructions
 
-This application uses .NET 5.0, if not installed, it can be downloaded from [here](https://dotnet.microsoft.com/download).
+This application only runs under Windows and requires [.NET 5.0](https://dotnet.microsoft.com/download).
 
-You can find the latest release [here](https://github.com/Kaufi-Jonas/Discord-Rich-Presence-for-TIDAL/releases) (only windows supported). The program shows an icon in the taskbar that allows you to temporarily disable it.
+You can find an installer under [releases](https://github.com/Kaufi-Jonas/NowPlaying-for-TIDAL/releases). The installer will create a StartMenu and Autostart entry. The program shows an icon in the taskbar that allows you to temporarily disable it.
 
-If you'd like this app to be started with Windows, press Win + R and enter `shell:startup`. Put a shortcut of the app's .exe into the folder that just opened.
+This application runs in your task bar, if you wish to temporarily disable or close it, you can find those options in the tray icon's menu.
 
 
 ## Instructions for Album Artwork
