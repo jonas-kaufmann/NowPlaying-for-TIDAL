@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20210c59-8ef0-4f99-b2e9-18b20b96193f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Data/AppConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Data/AppConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Data/ConfigModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Data/ConfigModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Data/Constants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Data/Constants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Data/DiscordAssets.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Data/DiscordAssets.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Discord-RPC-TIDAL.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/NowPlaying-for-TIDAL.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Discord/AssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Discord/AssetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Discord/DiscordApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Discord/DiscordApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Discord/DiscordModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Discord/DiscordModels.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/DiscordRpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/DiscordRpc.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Logging/DiscordLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Logging/DiscordLogger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Logging/SqualrLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Logging/SqualrLogger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Resources/AppIcon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Resources/AppIcon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Resources/TIDAL Logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Resources/TIDAL Logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/TidalListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/TidalListener.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/UI/NotifyIcon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/UI/NotifyIcon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Utils/GeneralUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/GeneralUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Utils/HttpUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/HttpUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-TIDAL/Utils/TidalApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/TidalApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Discord-RPC-for-TIDAL.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,8 +68,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1618501904425</updated>
-      <workItem from="1618501908385" duration="415000" />
+      <workItem from="1618501908385" duration="958000" />
+      <workItem from="1618562887337" duration="700000" />
     </task>
+    <task id="LOCAL-00001" summary="rename app from 'Discord-RPC-for-TIDAL' to 'NowPlaying-for-TIDAL', version bump to 1.3.0">
+      <created>1618502367554</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1618502367554</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -105,8 +91,11 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="rename app from 'Discord-RPC-for-TIDAL' to 'NowPlaying-for-TIDAL', version bump to 1.3.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename app from 'Discord-RPC-for-TIDAL' to 'NowPlaying-for-TIDAL', version bump to 1.3.0" />
   </component>
 </project>
