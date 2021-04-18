@@ -4,18 +4,18 @@ namespace nowplaying_for_tidal.Utils
 {
     public class GeneralUtils
     {
-        public static string CutDownStringToByteSize(string input, int maxLength)
+        public static string CutDownStringToByteSize(string input, int maxLengthInBytes)
         {
             var currentLength = Encoding.UTF8.GetByteCount(input);
-            if (currentLength <= maxLength)
+            if (currentLength <= maxLengthInBytes)
                 return input;
 
             for (int endIndex = input.Length - 1; endIndex >= 0; endIndex--)
             {
                 var cutString = input.Substring(0, endIndex + 1).Trim() + "..";
-                if (Encoding.UTF8.GetByteCount(cutString) <= maxLength)
+                if (Encoding.UTF8.GetByteCount(cutString) <= maxLengthInBytes)
                 {
-                    return input.Substring(0, endIndex + 1);
+                    return cutString;
                 }
             }
 

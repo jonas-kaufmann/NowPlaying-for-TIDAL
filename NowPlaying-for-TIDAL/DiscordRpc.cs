@@ -68,7 +68,7 @@ namespace nowplaying_for_tidal
                 Assets = new Assets
                 {
                     LargeImageKey = Constants.DiscordRpcDefaultLargeImageKey,
-                    LargeImageText = Constants.DiscordRpcDefaultLargeImageText
+                    LargeImageText = GeneralUtils.CutDownStringToByteSize(track.Album.Title, 128)
                 }
             };
             

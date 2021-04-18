@@ -9,9 +9,9 @@
   <component name="ChangeListManager">
     <list default="true" id="20210c59-8ef0-4f99-b2e9-18b20b96193f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NowPlaying-for-TIDAL/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NowPlaying-for-TIDAL/DiscordRpc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/DiscordRpc.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NowPlaying-for-TIDAL/NowPlaying-for-TIDAL.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/NowPlaying-for-TIDAL.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NowPlaying-for-TIDAL/UI/NotifyIcon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/UI/NotifyIcon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/TidalApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/TidalApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/GeneralUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/GeneralUtils.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +42,9 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/TidalApi.cs" />
       <option value="$PROJECT_DIR$/NowPlaying-for-TIDAL/UI/NotifyIcon.cs" />
+      <option value="$PROJECT_DIR$/NowPlaying-for-TIDAL/DiscordRpc.cs" />
+      <option value="$PROJECT_DIR$/NowPlaying-for-TIDAL/NowPlaying-for-TIDAL.csproj" />
+      <option value="$PROJECT_DIR$/NowPlaying-for-TIDAL/Utils/GeneralUtils.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rDDjaCIRLZCuJhf4GRt8pdlMvK" />
@@ -55,18 +58,17 @@
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunManager" selected="Publish to folder.Publish NowPlaying-for-TIDAL to folder">
     <configuration name="Publish NowPlaying-for-TIDAL to folder" type="DotNetFolderPublish" factoryName="Publish to folder" temporary="true">
-      <riderPublish configuration="Release" platform="Any CPU" runtime="Portable" target_folder="$PROJECT_DIR$/NowPlaying-for-TIDAL/bin/publish" target_framework="net5.0-windows" uuid_high="-8579141539561978296" uuid_low="-7045936991666814905" />
+      <riderPublish configuration="Release" delete_existing_files="true" platform="Any CPU" runtime="Portable" target_folder="$PROJECT_DIR$/NowPlaying-for-TIDAL/bin/publish" target_framework="net5.0-windows" uuid_high="-8579141539561978296" uuid_low="-7045936991666814905" />
       <method v="2" />
     </configuration>
     <configuration name="NowPlaying-for-TIDAL" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/NowPlaying-for-TIDAL/bin/Debug/net5.0-windows/NowPlaying-for-TIDAL.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NowPlaying-for-TIDAL/bin/Debug/net5.0-windows" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
@@ -76,7 +78,7 @@
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
       <option name="PROJECT_KIND" value="DotNetCore" />
-      <option name="PROJECT_TFM" value="" />
+      <option name="PROJECT_TFM" value="net5.0-windows7.0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -102,7 +104,8 @@
       <workItem from="1618501908385" duration="958000" />
       <workItem from="1618562887337" duration="700000" />
       <workItem from="1618737576869" duration="273000" />
-      <workItem from="1618737962375" duration="6158000" />
+      <workItem from="1618737962375" duration="7116000" />
+      <workItem from="1618749025103" duration="669000" />
     </task>
     <task id="LOCAL-00001" summary="rename app from 'Discord-RPC-for-TIDAL' to 'NowPlaying-for-TIDAL', version bump to 1.3.0">
       <created>1618502367554</created>
@@ -111,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618502367554</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="improved tidal query results, version bump to 1.3.1&#10;- TidalApi: it is now made sure that a song's title matches the input as close as possible; this prevents songs from the same artist containing the same word as the input to be returned&#10;- TidalApi: if an artist has published a track in an standalone album and together with other tracks in another album, the track within the album containing the most tracks is chosen&#10;- These changes will make sure that the limited number of Discord Assets is more efficiently used&#10;- NotifyIcon: Display Version String">
+      <created>1618747994277</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618747994277</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,6 +139,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="rename app from 'Discord-RPC-for-TIDAL' to 'NowPlaying-for-TIDAL', version bump to 1.3.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename app from 'Discord-RPC-for-TIDAL' to 'NowPlaying-for-TIDAL', version bump to 1.3.0" />
+    <MESSAGE value="improved tidal query results, version bump to 1.3.1&#10;- TidalApi: it is now made sure that a song's title matches the input as close as possible; this prevents songs from the same artist containing the same word as the input to be returned&#10;- TidalApi: if an artist has published a track in an standalone album and together with other tracks in another album, the track within the album containing the most tracks is chosen&#10;- These changes will make sure that the limited number of Discord Assets is more efficiently used&#10;- NotifyIcon: Display Version String" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved tidal query results, version bump to 1.3.1&#10;- TidalApi: it is now made sure that a song's title matches the input as close as possible; this prevents songs from the same artist containing the same word as the input to be returned&#10;- TidalApi: if an artist has published a track in an standalone album and together with other tracks in another album, the track within the album containing the most tracks is chosen&#10;- These changes will make sure that the limited number of Discord Assets is more efficiently used&#10;- NotifyIcon: Display Version String" />
   </component>
 </project>
