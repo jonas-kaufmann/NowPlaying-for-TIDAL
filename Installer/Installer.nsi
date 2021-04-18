@@ -6,7 +6,7 @@ Unicode True
 !define APPNAME "NowPlaying-for-TIDAL"
 
 # configure installer
-OutFile "${APPNAME} Setup.exe"
+OutFile "${APPNAME}_Setup.exe"
 SetCompressor lzma
 
 InstallDir "$PROGRAMFILES64\${APPNAME}"
