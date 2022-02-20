@@ -27,7 +27,7 @@ Head over to the [Discord Developer Portal's Application Page](https://discord.c
 
 Copy the Application ID from the General Information page and insert it into this program's config file. You can find the config file by right clicking on the tray menu icon.
 
-The last thing we need is an authentication token, so that Discord knows it's you, the owner of the application, who is uploading the album artworks. To attain this token, again, make sure that you are on [Discord Developer Portal's Application Page](https://discord.com/developers/applications). Open the developer tools of your webbrowser. You can typically accomplish this by pressing `Ctrl+Shift+I`. Switch to the Network or Network analysis tab. Reload the web page. A lot of request will now appear on your screen. In these search for any request containing a request header called `Authorization`. When found, copy it's value to this program's config. The final result will look something like this:
+The last thing we need is an authentication token, so that Discord knows it's you, the owner of the application, who is uploading the album artworks. To attain this token, again, make sure that you are on [Discord Developer Portal's Application Page](https://discord.com/developers/applications). Open the developer tools of your webbrowser. You can typically accomplish this by pressing `Ctrl+Shift+I`. Switch to the Network or Network analysis tab. Reload the web page. A lot of requests will now appear on your screen. In these search for any request containing a request header called `Authorization`. When found, copy it's value to this program's config. The final result will look something like this:
 ```
 {
   "DiscordAppId": "633539288744553243",
