@@ -36,7 +36,7 @@ The last thing we need is an authentication token, so that Discord knows it's yo
 ```
 
 
-## Some Notes regarding Implementation
+## Implementation Details
 
 My goal was to create a clean, lightweight and easily extensible app.
 
