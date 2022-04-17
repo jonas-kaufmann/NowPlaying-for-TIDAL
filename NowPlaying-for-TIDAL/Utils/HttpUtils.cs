@@ -1,6 +1,12 @@
-﻿using System;
+﻿using nowplaying_for_tidal.Data;
+using Polly;
+using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace nowplaying_for_tidal.Utils
 {
@@ -12,7 +18,7 @@ namespace nowplaying_for_tidal.Utils
 
             return imageRaw == null ? null : Convert.ToBase64String(imageRaw, 0, imageRaw.Length);
         }
-        
+
         public static string ConvertImageToBase64(byte[] rawImage)
         {
             return Convert.ToBase64String(rawImage, 0, rawImage.Length);
@@ -47,5 +53,19 @@ namespace nowplaying_for_tidal.Utils
 
             return buf;
         }
+    }
+
+    public class HttpRetryMessageHandler : DelegatingHandler
+    {
+        public HttpRetryMessageHandler(HttpClientHandler handler) : base(handler) { }
+
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken) =>
+            Policy
+                .Handle<HttpRequestException>()
+                .Or<SocketException>()
+                .WaitAndRetryForeverAsync(retryAttempt => TimeSpan.FromSeconds(Constants.RetryDelay))
+                .ExecuteAsync(() => base.SendAsync(request, cancellationToken));
     }
 }

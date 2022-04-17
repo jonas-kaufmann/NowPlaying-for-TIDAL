@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/Kaufi-Jonas/NowPlaying-for-TIDAL</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Kaufi-Jonas/NowPlaying-for-TIDAL</PackageProjectUrl>
     <Description>Display your currently playing song in TIDAL to other Discord users</Description>
-    <Version>1.3.2</Version>
+    <Version>1.3.3</Version>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
+    <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="SimpleTidalApi" Version="1.0.1" />
     <PackageReference Include="Squalr.Engine.Scanning" Version="2.3.0.1" />
   </ItemGroup>

@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using nowplaying_for_tidal.Data;
+using nowplaying_for_tidal.Utils;
 
 namespace nowplaying_for_tidal.Discord
 {
     public class DiscordApi
     {
-        private readonly HttpClient HttpClient = new();
+        private readonly HttpClient HttpClient = new(new HttpRetryMessageHandler(new HttpClientHandler()));
 
         public DiscordApi()
         {

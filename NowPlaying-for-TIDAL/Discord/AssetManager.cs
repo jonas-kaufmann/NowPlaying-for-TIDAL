@@ -80,7 +80,7 @@ namespace nowplaying_for_tidal.Discord
         }
 
         /// <summary>
-        /// It takes some time before uploaded assets are available to be used. Therefore this method checks whether the asset has been uploaded and that some time has passed since then
+        /// It takes some time before uploaded assets are available to be used. Therefore this method checks whether the asset has been uploaded and that some time has passed since then.
         /// </summary>
         /// <param name="album"></param>
         /// <returns></returns>
