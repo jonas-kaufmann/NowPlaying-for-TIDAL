@@ -16,8 +16,8 @@ namespace nowplaying_for_tidal
         static void Main()
         {
             AppDomain.CurrentDomain.UnhandledException +=
-                CurrentDomain_UnhandledException; // Receive unhandled exceptions
-            Logger.Subscribe(new SqualrLogger()); // Receive logs from the Squalr
+                CurrentDomain_UnhandledException; // Handler for unhandled exception
+            Logger.Subscribe(new SqualrLogger()); // Log Squalr
             Trace.Listeners.Add(new ConsoleTraceListener());
 
             AppConfig.Load();

@@ -71,7 +71,9 @@ namespace nowplaying_for_tidal.Utils
                     if (correspondingAlbum == null) return;
                     lock (albums)
                     {
-                        albums.Add(correspondingAlbum.ID, correspondingAlbum);
+                        if (!albums.ContainsKey(correspondingAlbum.ID)) {
+                            albums.Add(correspondingAlbum.ID, correspondingAlbum);
+                        }
                     }
                 });
                 
