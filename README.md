@@ -1,3 +1,8 @@
+## Better Alternative Out There
+I decided to archive this repository. The approach I am using is quite brittle towards future changes from TIDAL's side and does in fact not work currently (https://github.com/Kaufi-Jonas/NowPlaying-for-TIDAL/issues/7). I recommend to use https://github.com/Mastermindzh/tidal-hifi instead, which extracts the required information about the currently playing song directly from the DOM.
+
+It was fun working on this and being exposed to the open-source community for the first time so thanks to everybody who interacted with this repository in any way.
+
 # NowPlaying-for-TIDAL
 Lightweight app that aims to imitate Spotify's Now Playing feature in Discord using Game Activity. This project is neither created nor supported by Discord or TIDAL.
 
